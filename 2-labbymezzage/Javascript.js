@@ -34,7 +34,7 @@ var Motor = {
         for (var i = 0; i < Motor.messages.length; i++) {
             Motor.renderMessage(i);
         }
-        document.getElementById("uniqueMessage").innerHTML = "Antal Medelande " + i;
+        document.getElementById("uniqueMessage").innerHTML = "Antal meddelande " + i;
     },
     renderMessage: function(MessageID) {
 
