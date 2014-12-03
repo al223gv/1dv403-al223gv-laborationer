@@ -1,8 +1,6 @@
 "use strict";
 var Motor = {
 
-    count: 0,
-
     messages: [],
 
     init: function() {

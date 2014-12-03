@@ -50,7 +50,6 @@ function Message(message, date){
     };
     
     Message.prototype.getDateText = function(){
-        var hours, minutes, seconds;
         var monthNames = [ "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December" ];
     
