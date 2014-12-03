@@ -6,17 +6,28 @@ window.onload = function(){
 	var convertString = function(str){
 		// Plats för förändring.		
 		// Returnera den konverterade strängen.
-		// Vid fel, kasta ett undantag med ett meddelande till användaren. 
-	
-
-
-
-
-
-
+		// Vid fel, kasta ett undantag med ett meddelande till användaren.
+		var stringArray = [];
+		
+		if(str === ""){
+			throw new Error("Ingen inmatad sträng.");
+		}
+		
+		for(var i = 0; i < str.length; i+=1){
+			if(str[i] === "A" || str[i] === "a"){
+				stringArray[i] = "#";
+			}
+			else if(str[i] === str[i].toUpperCase()){
+				stringArray[i] = str[i].toLowerCase();
+			}
+			else if(str[i] === str[i].toLowerCase()){
+				stringArray[i] = str[i].toUpperCase();
+			}
+		}
+		stringArray = stringArray.join("");
+		return stringArray;
 	};
 	// ------------------------------------------------------------------------------
-
 
 	// Kod för att hantera utskrift och inmatning. Denna ska du inte behöva förändra
 	var p = document.querySelector("#value"); // Referens till DOM-noden med id="#value"
@@ -30,7 +41,7 @@ window.onload = function(){
 		p.classList.remove( "error");
 
 		try {
-			var answer = convertString(input.value) // Läser in texten från textrutan och skickar till funktionen "convertString"
+			var answer = convertString(input.value); // Läser in texten från textrutan och skickar till funktionen "convertString"
 			p.innerHTML = answer;		// Skriver ut texten från arrayen som skapats i funktionen.	
 		} catch (error){
 			p.classList.add( "error"); // Växla CSS-klass, IE10+
