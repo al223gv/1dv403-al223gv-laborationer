@@ -1,0 +1,21 @@
+h1{
+    font-family: 'Gloria Hallelujah', cursive;
+    text-align:center;
+    font-size:50px;
+}
+
+#gameBox{
+    
+    width:640px;
+    height:650px;
+    background-color:#CCFFFF;
+    padding:5px;
+    padding-bottom:5px;
+    margin:auto;
+    border: 1px solid black;
+}
+img{
+    max-width:150px;
+    max-height:150px;
+    margin:5px;
+}
