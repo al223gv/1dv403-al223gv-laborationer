@@ -63,10 +63,14 @@ button img{
     text-align:center;
     box-shadow: 0px 0px 30px black;
     margin:auto;
+    overflow-y:hidden;
 }
 #gameOver button{
+    -webkit-appearance:none;
+    -moz-appearance:none;
     width:300px;
     height:30px;
+    margin-bottom:10px;
 }
 .hidden{
    display:none;
