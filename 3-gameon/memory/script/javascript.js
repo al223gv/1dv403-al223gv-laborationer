@@ -29,7 +29,7 @@ var Memory = {
 
         img.classList.add(id + ".png.png");
         img.id = index;
-        img.setAttribute("src", "memory/pics/0.png.png");
+        img.setAttribute("src", "pics/0.png.png");
         button.id = "button" + index;
 
         button.setAttribute("tabindex", index + 1);
@@ -46,7 +46,7 @@ var Memory = {
         if (Memory.firstImageId === null || Memory.secondImageId === null) {
             if (Memory.uniqueOne === null) {
 
-                img.setAttribute("src", "memory/pics/" + img.className);
+                img.setAttribute("src", "pics/" + img.className);
                 Memory.uniqueOne = img.id;
                 Memory.firstImageId = img.className;
     
@@ -55,7 +55,7 @@ var Memory = {
             }
             else if (Memory.uniqueTwo === null && Memory.uniqueOne !== img.id) {
                 document.getElementById("button" + img.id).removeEventListener('click', Memory.myfunc, false);
-                img.setAttribute("src", "memory/pics/" + img.className);
+                img.setAttribute("src", "pics/" + img.className);
                 Memory.uniqueTwo = img.id;
                 Memory.secondImageId = img.className;
             }
@@ -113,8 +113,8 @@ var Memory = {
 
                 setTimeout(function() {
 
-                    document.getElementById(Memory.uniqueOne).src = "memory/pics/0.png.png";
-                    img.src = "memory/pics/0.png.png";
+                    document.getElementById(Memory.uniqueOne).src = "pics/0.png.png";
+                    img.src = "pics/0.png.png";
 
                     document.getElementById("button" + Memory.uniqueTwo).addEventListener("click", Memory.myfunc, false);
                     document.getElementById("button" + Memory.uniqueOne).addEventListener('click', Memory.myfunc, false);
