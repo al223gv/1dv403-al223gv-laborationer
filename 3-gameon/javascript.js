@@ -66,6 +66,7 @@ var Memory = {
                 Memory.tries += 1;
                 if (Memory.pairs === 8) {
                     console.log("grattis!");
+                    document.getElementById("button"+img.id).blur();
                     Memory.firstImageId = null;
                     Memory.secondImageId = null;
                     Memory.uniqueOne = null;
@@ -78,12 +79,13 @@ var Memory = {
                     h1.innerHTML = "Grattis, du vann!";
                     p1.innerHTML = "Antal gissningar: " + Memory.tries;
                     button.innerHTML = "Spela igen?";
-
+                    
                     gameOver.classList.remove("hidden");
 
                     gameOver.appendChild(h1);
                     gameOver.appendChild(p1);
                     gameOver.appendChild(button);
+                    button.focus();
 
                     button.addEventListener("click", function() {
                         var gameBox = document.getElementById("gameBox");
