@@ -44,6 +44,13 @@ button img{
     background-color:transparent;
     border:none;
 }
+#gameOverWrapper{
+    position:fixed;
+    top:0px;
+    height:100%;
+    width:100%;
+    background-image: url("../memory/pics/black.png");
+}
 #gameOver{
     position:absolute;
     top:150px;
@@ -65,7 +72,7 @@ button img{
    display:none;
 }
 
-button:focus { 
+#gameBox button:focus { 
     -webkit-appearance:none;
     -moz-appearance:none;
     outline:none;

@@ -49,7 +49,7 @@ var Memory = {
                 img.setAttribute("src", "memory/pics/" + img.className);
                 Memory.uniqueOne = img.id;
                 Memory.firstImageId = img.className;
-
+    
                 document.getElementById("button" + img.id).removeEventListener('click', Memory.myfunc, false);
                 return;
             }
@@ -72,6 +72,7 @@ var Memory = {
                     Memory.uniqueOne = null;
                     Memory.uniqueTwo = null;
                     Memory.Pairs = 0;
+                    var gameOverWrapper = document.querySelector("#gameOverWrapper");
                     var gameOver = document.querySelector("#gameOver");
                     var h1 = document.createElement("h1");
                     var p1 = document.createElement("p");
@@ -79,7 +80,7 @@ var Memory = {
                     h1.innerHTML = "Grattis, du vann!";
                     p1.innerHTML = "Antal gissningar: " + Memory.tries;
                     button.innerHTML = "Spela igen?";
-                    
+                    gameOverWrapper.classList.remove("hidden");
                     gameOver.classList.remove("hidden");
 
                     gameOver.appendChild(h1);
@@ -92,6 +93,7 @@ var Memory = {
                         gameOver.innerHTML = "";
                         Memory.tries = 0;
                         Memory.pairs = 0;
+                        gameOverWrapper.classList.add("hidden");
                         gameOver.classList.add("hidden");
                         gameBox.innerHTML = "";
 
@@ -112,7 +114,7 @@ var Memory = {
                 setTimeout(function() {
 
                     document.getElementById(Memory.uniqueOne).src = "memory/pics/0.png.png";
-                    document.getElementById(Memory.uniqueTwo).src = "memory/pics/0.png.png";
+                    img.src = "memory/pics/0.png.png";
 
                     document.getElementById("button" + Memory.uniqueTwo).addEventListener("click", Memory.myfunc, false);
                     document.getElementById("button" + Memory.uniqueOne).addEventListener('click', Memory.myfunc, false);
