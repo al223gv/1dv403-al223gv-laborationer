@@ -3,15 +3,17 @@
 var Memory = {
 
     numberArray: [],
+    imageArray: [],
     firstImageId: null,
     secondImageId: null,
     uniqueOne: null,
     uniqueTwo: null,
     click: 0,
-    Pairs: 0,
+    pairs: 0,
     tries: 0,
+    index: null,
 
-    init: function () {
+    init: function() {
         Memory.numberArray = RandomGenerator.getPictureArray(4, 4);
 
         for (var i = 0; i < Memory.numberArray.length; i += 1) {
@@ -19,92 +21,108 @@ var Memory = {
         }
     },
 
-    renderNewBoard: function (id, index) {
+    renderNewBoard: function(id, i) {
+        var index = i;
         var gameBox = document.querySelector("#gameBox");
-        var a = document.createElement("button");
+        var button = document.createElement("button");
         var img = document.createElement("img");
 
-        img.classList.add("img." + id);
+        img.classList.add(id + ".png.png");
+        img.id = index;
         img.setAttribute("src", "memory/pics/0.png.png");
-        a.setAttribute("tabindex", index + 1);
+        button.id = "button" + index;
 
-        gameBox.appendChild(a);
-        a.appendChild(img);
+        button.setAttribute("tabindex", index + 1);
 
-        a.addEventListener("click", function () {
-            if (Memory.firstImageId === null || Memory.secondImageId === null && Memory.uniqueOne !== index) {
-                img.setAttribute("src", "memory/pics/" + id + ".png.png");
-
-                if (Memory.firstImageId === null) {
-                    Memory.firstImageId = id;
-                    Memory.uniqueOne = index;
-                    console.log(Memory.firstImageId);
-                    return;
-                }
-                else if (Memory.secondImageId === null) {
-                    Memory.secondImageId = id;
-                    Memory.uniqueTwo = index;
-                    console.log(Memory.secondImageId);
-
-                    if (Memory.firstImageId !== null && Memory.firstImageId !== null && Memory.firstImageId === Memory.secondImageId) {
-                        console.log("grattis");
-                        Memory.tries += 1;
-                        Memory.Pairs += 1;
-                        if (Memory.Pairs === 8) {
-                            Memory.firstImageId = null;
-                            Memory.secondImageId = null;
-                            Memory.uniqueOne = null;
-                            Memory.uniqueTwo = null;
-                            Memory.Pairs = 0;
-                            var gameOver = document.querySelector("#gameOver");
-                            var h1 = document.createElement("h1");
-                            var p1 = document.createElement("p");
-                            var button = document.createElement("button");
-                            h1.innerHTML = "Grattis, du vann!";
-                            p1.innerHTML = "Antal gissningar: " + Memory.tries;
-                            button.innerHTML = "Spela igen?";
-
-                            gameOver.classList.remove("hidden");
-
-                            gameOver.appendChild(h1);
-                            gameOver.appendChild(p1);
-                            gameOver.appendChild(button);
-
-                            button.addEventListener("click", function () {
-                                gameOver.innerHTML = "";
-                                Memory.tries = 0;
-                                gameOver.classList.add("hidden");
-                                gameBox.innerHTML = "";
-
-                                Memory.init();
-                            }, false);
-                        }
-                        else {
-                            Memory.firstImageId = null;
-                            Memory.secondImageId = null;
-                            Memory.uniqueOne = null;
-                            Memory.uniqueTwo = null;
-                        }
-                    }
-                    else if (Memory.firstImageId !== null && Memory.firstImageId !== null && Memory.firstImageId !== Memory.secondImageId) {
-                        setTimeout(function () {
-                            Memory.tries += 1;
-                            document.getElementsByClassName("img." + Memory.firstImageId)[0].src = "memory/pics/0.png.png";
-                            document.getElementsByClassName("img." + Memory.firstImageId)[1].src = "memory/pics/0.png.png";
-                            document.getElementsByClassName("img." + Memory.secondImageId)[0].src = "memory/pics/0.png.png";
-                            document.getElementsByClassName("img." + Memory.secondImageId)[1].src = "memory/pics/0.png.png";
-                            Memory.firstImageId = null;
-                            Memory.secondImageId = null;
-                            Memory.uniqueOne = null;
-                            Memory.uniqueTwo = null;
-                        }, 1000);
-                    }
-                }
-            }
-        }, false);
+        gameBox.appendChild(button);
+        button.appendChild(img);
+        button.addEventListener("click", Memory.myfunc, false);
     },
-    checkTile: function (id) {
 
+
+    myfunc: function(evt) {
+        evt.preventDefault();
+        var img = evt.currentTarget.childNodes[0];
+
+        if (Memory.uniqueOne === null) {
+
+            img.setAttribute("src", "memory/pics/" + img.className);
+            Memory.uniqueOne = img.id;
+            Memory.firstImageId = img.className;
+
+            document.getElementById("button" + img.id).removeEventListener('click', Memory.myfunc, false);
+            return;
+        }
+        else if (Memory.uniqueTwo === null && Memory.uniqueOne !== img.id) {
+            document.getElementById("button" + img.id).removeEventListener('click', Memory.myfunc, false);
+            img.setAttribute("src", "memory/pics/" + img.className);
+            Memory.uniqueTwo = img.id;
+            Memory.secondImageId = img.className;
+        }
+
+        if (Memory.secondImageId !== null && Memory.uniqueOne !== Memory.uniqueTwo && Memory.firstImageId === Memory.secondImageId) {
+
+            Memory.pairs += 1;
+            Memory.tries += 1;
+            if (Memory.pairs === 8) {
+                console.log("grattis!");
+                Memory.firstImageId = null;
+                Memory.secondImageId = null;
+                Memory.uniqueOne = null;
+                Memory.uniqueTwo = null;
+                Memory.Pairs = 0;
+                var gameOver = document.querySelector("#gameOver");
+                var h1 = document.createElement("h1");
+                var p1 = document.createElement("p");
+                var button = document.createElement("button");
+                h1.innerHTML = "Grattis, du vann!";
+                p1.innerHTML = "Antal gissningar: " + Memory.tries;
+                button.innerHTML = "Spela igen?";
+
+                gameOver.classList.remove("hidden");
+
+                gameOver.appendChild(h1);
+                gameOver.appendChild(p1);
+                gameOver.appendChild(button);
+
+                button.addEventListener("click", function() {
+                    var gameBox = document.getElementById("gameBox");
+                    gameOver.innerHTML = "";
+                    Memory.tries = 0;
+                    Memory.pairs = 0;
+                    gameOver.classList.add("hidden");
+                    gameBox.innerHTML = "";
+
+                    Memory.init();
+                }, false);
+            }
+
+            else {
+                console.log("Grattis! Ett nytt par!");
+                Memory.firstImageId = null;
+                Memory.secondImageId = null;
+                Memory.uniqueOne = null;
+                Memory.uniqueTwo = null;
+            }
+        }
+        else if (Memory.secondImageId !== null && Memory.uniqueOne !== Memory.uniqueTwo && Memory.firstImageId !== Memory.secondImageId) {
+
+            setTimeout(function() {
+
+                document.getElementById(Memory.uniqueOne).src = "memory/pics/0.png.png";
+                document.getElementById(Memory.uniqueTwo).src = "memory/pics/0.png.png";
+
+                document.getElementById("button" + Memory.uniqueTwo).addEventListener("click", Memory.myfunc, false);
+                document.getElementById("button" + Memory.uniqueOne).addEventListener('click', Memory.myfunc, false);
+
+                Memory.firstImageId = null;
+                Memory.secondImageId = null;
+                Memory.uniqueOne = null;
+                Memory.uniqueTwo = null;
+                Memory.tries += 1;
+
+            }, 1000);
+        }
     }
 };
 window.addEventListener("load", Memory.init, false);
