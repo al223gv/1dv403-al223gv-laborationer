@@ -67,6 +67,8 @@ var quiz = {
     answer: function() {
 
         quiz.answerObj.answer = document.getElementById("answer").value;
+        
+        document.getElementById("answer").value = "";
 
         console.log(quiz.answerObj);
 
